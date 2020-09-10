@@ -1,12 +1,12 @@
-# _Project Name_
+# _Blackjack_
 
-#### _{Brief description}_
+#### _A web page that allows the user to play Blackjack against a virtual dealer._
 
-#### By _**{list contributors}**_
+#### By _**Joseph Karnafel, Alex Goodwin, & Chloe Hellberg**_
 
 ## Description
 
-{More detailed description. List what concepts this you practice in this project.}
+This project was made to practice promises, asynchrony, API's, static methods. The project uses the 'Deck of Cards' API to generate a shuffled deck of cards and deals them to the player and the dealer. The project also uses a static method with a promise to make sure the code is executed only when an API call to 'Deck of Cards' is successful.
 
 ## Setup/Installation Requirements
 
@@ -14,7 +14,7 @@
 * _type "cd desktop", then press enter_
 * _type "git clone {URL}", then press enter_
 * _locate and open folder on desktop named "{folder name}"_
-* _open the file named "index.html"_
+* _inside the folder named 'src', open the file named "index.html"_
 
 ## Known Bugs
 
@@ -30,9 +30,13 @@ _If you have any questions or ideas on how to improve this project, feel free to
 * _CSS_
 * _Bootstrap_
 * _jQuery_
+* _JavaScript_
+* _deckofcards_
+* _VS Code_
+* _webpack_
 
 ### License
 
 *This project is licensed under an MIT license.*
 
-Copyright (c) 2020 **_{List contributors}_**
+Copyright (c) 2020 **_Joseph Karnafel, Alex Goodwin, & Chloe Hellberg_**

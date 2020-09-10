@@ -27,17 +27,8 @@ export default class Deck {
   }
   
   hit(playerToHit) {
-    /* if(this.playerScore > 21){
-      alert("you bust!");
-      location.reload();
-    }
-    else if(this.playerScore == 21){
-      alert("Blackjack, you win!");
-      location.reload();
-    } */
     playerToHit.push(this.deckObj.cards[this.deckIndex]);
     this.deckIndex++;
-    console.log(playerToHit);
   }
 
   getScore(player, playerScore) { 
@@ -68,7 +59,6 @@ export default class Deck {
         }
       }
     }
-    
     return playerScore;
   }
 
@@ -76,22 +66,30 @@ export default class Deck {
     for (this.deckIndex; this.deckIndex < 3; this.deckIndex += 2){
       this.playerArray.push(this.deckObj.cards[this.deckIndex]);
       this.dealerArray.push(this.deckObj.cards[this.deckIndex+1]);
-      console.log("player", this.playerArray);
-      console.log("dealer", this.dealerArray);
-    }
-  }
-  hold(){
-    this.playerHold = true;
-    if (this.playerHold && this.dealerHold){
-      if (this.playerScore > this.dealerScore){
-        alert("Your score is :" + this.playerScore + ",you win!");
-      } else if (this.dealerScore > this.playerScore){
-        alert("Dealer wins!");
-      }
     }
   }
 
-  dealerAI(){
-    
+  winCheck(){
+    if (this.playerScore === this.dealerScore) {
+      alert("It's a draw!");
+    } else if(this.playerScore === 21){
+      alert("Blackjack, you win!");
+    } else if(this.dealerScore === 21){
+      alert("Blackjack, dealer wins.");
+    } else if(this.dealerScore > 21){
+      alert("You win! Dealer busted.");
+    } else if (this.playerScore > this.dealerScore){
+      alert("Your score is:" + this.playerScore + ", you win!");
+    } else if (this.dealerScore > this.playerScore){
+      alert("Dealer wins!");
+    }
+  }
+
+  dealerStays(){
+    if (this.dealerScore < 17) {
+      return false;
+    } else {
+      return true;
+    }
   }
 }
