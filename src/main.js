@@ -5,33 +5,32 @@ import './css/styles.css';
 import Deck from "./js/deck.js"
 
 $(document).ready(function() {
-  // let newDeck = new Deck();
-  let deckObj;
-  let deckIndex = 0;
-  let playerArray = [];
-  let dealerArray = [];
+  let newDeck = new Deck();
   $("#btn-new-game").click(function(){
     $("#btn-hit").show();
+    $("#btn-hold").show();
     let promise = Deck.getDeck();
     promise.then(function(response) {
-      deckObj = JSON.parse(response);
-      getElements(deckObj);
-      for (deckIndex; deckIndex < 3; deckIndex += 2){
-        playerArray.push(deckObj.cards[deckIndex]);
-        dealerArray.push(deckObj.cards[deckIndex+1]);
-        console.log("player", playerArray);
-        console.log("dealer", dealerArray);
+      newDeck.deckObj = JSON.parse(response);
+      getElements(newDeck.deckObj);
+      newDeck.startGame();
+
+      for(let i = 0; i < newDeck.playerArray.length; i++){
+        $('.showPlayerHand').append(`<img src=${newDeck.playerArray[i].image}>`);
+        $('.showDealerHand').append(`<img src=${newDeck.dealerArray[i].image}>`);
       }
+      console.log(newDeck.getScore(newDeck.playerArray, newDeck.playerScore));
     })
     $("#btn-hit").click(function(){
-      playerArray.push(deckObj.cards[deckIndex]);
-      deckIndex++;
-      dealerArray.push(deckObj.cards[deckIndex]);
-      deckIndex++;
-      console.log(playerArray);
-      console.log(dealerArray);
+      newDeck.hit(newDeck.playerArray);
+      newDeck.playerScore = newDeck.getScore(newDeck.playerArray, newDeck.playerScore);
+      $('.showPlayerHand').append(`<img src=${newDeck.playerArray[newDeck.playerArray.length-1].image}>`);
+      console.log(newDeck.playerScore);
     });
-
+    $("#btn-hold").click(function(){
+      newDeck.hold();
+      console.log(newDeck.playerHold);
+    })
     function getElements(response) {
       console.log("Cards", response);
     }

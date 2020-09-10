@@ -3,9 +3,11 @@ export default class Deck {
     this.deckObj;
     this.deckIndex = 0;
     this.playerArray = [];
-    this.playerTotal = 0;
+    this.playerScore = 0;
     this.dealerArray = [];
-    this.dealerTotal = 0;
+    this.dealerScore = 0;
+    this.playerHold = false;
+    this.dealerHold = false;
   }
 
   static getDeck() {
@@ -24,26 +26,72 @@ export default class Deck {
     });
   }
   
-  draw() {
-    // this.playerArray.push(this.deckObj.cards[this.deckIndex].code);
-    // this.deckIndex++;
-    // this.dealerArray.push(this.deckObj.cards[this.deckIndex].code);
-    // this.deckIndex++;
-    // console.log(this.playerArray);
-    // console.log(this.dealerArray);
+  hit(playerToHit) {
+    /* if(this.playerScore > 21){
+      alert("you bust!");
+      location.reload();
+    }
+    else if(this.playerScore == 21){
+      alert("Blackjack, you win!");
+      location.reload();
+    } */
+    playerToHit.push(this.deckObj.cards[this.deckIndex]);
+    this.deckIndex++;
+    console.log(playerToHit);
   }
 
-  getScore() {
-    let playerScore = 0;
+  getScore(player, playerScore) { 
+    if (playerScore === 0) {
+      for(let i=0; i < player.length; i++) {
+        if (parseInt(player[i].value)) { 
+          playerScore += parseInt(player[i].value);
+        } else if (/(JACK|QUEEN|KING)/.test(player[i].value)) {
+          playerScore += 10;
+        } else if (player[i].value === "ACE") {
+          if (playerScore + 11 <= 21){
+            playerScore += 11;
+          } else {
+            playerScore += 1
+          }
+        }
+      }
+    } else {
+      if (parseInt(player[player.length-1].value)) { 
+        playerScore += parseInt(player[player.length-1].value);
+      } else if (/(JACK|QUEEN|KING)/.test(player[player.length-1].value)) {
+        playerScore += 10;
+      } else if (player[player.length-1].value === "ACE") {
+        if (playerScore + 11 <= 21){
+          playerScore += 11;
+        } else {
+          playerScore += 1
+        }
+      }
+    }
     
-    for(let i=0; i < this.playerArray.length; i++) {
-      if (parseInt(this.playerArray[i].value)) { 
-        return playerScore + parseInt(this.playerArray[i].value);
-      } //else if (this.playerArray[i].value.match(/(JACK|QUEEN|KING)/)) {
-        
-     // }
+    return playerScore;
+  }
+
+  startGame(){
+    for (this.deckIndex; this.deckIndex < 3; this.deckIndex += 2){
+      this.playerArray.push(this.deckObj.cards[this.deckIndex]);
+      this.dealerArray.push(this.deckObj.cards[this.deckIndex+1]);
+      console.log("player", this.playerArray);
+      console.log("dealer", this.dealerArray);
     }
   }
-}
+  hold(){
+    this.playerHold = true;
+    if (this.playerHold && this.dealerHold){
+      if (this.playerScore > this.dealerScore){
+        alert("Your score is :" + this.playerScore + ",you win!");
+      } else if (this.dealerScore > this.playerScore){
+        alert("Dealer wins!");
+      }
+    }
+  }
 
-///(JACK|QUEEN|KING)/
+  dealerAI(){
+    
+  }
+}
